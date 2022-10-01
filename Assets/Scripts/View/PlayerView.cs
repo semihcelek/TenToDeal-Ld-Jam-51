@@ -77,11 +77,10 @@ namespace SemihCelek.TenToDeal.View
                     yRotation += 0f;
                     break;
                 case > 0f:
-                    yRotation += 45f * (verticalInput >= 0f ? 1f : verticalInput);
+                    yRotation += 45f;
                     break;
                 case < 0f:
-                    yRotation -= 135f * (verticalInput <= 0f ? 1f : verticalInput);
-                    Debug.Log(yRotation);
+                    yRotation -= 135f;
                     break;
             }
 
@@ -91,19 +90,32 @@ namespace SemihCelek.TenToDeal.View
                     yRotation += 0f;
                     break;
                 case > 0f:
-                    yRotation -= 45f * (horizontalInput <= 0f ? 1f : horizontalInput);
+                    yRotation -= 45f;
                     break;
                 case < 0:
-                    yRotation += 135f * (horizontalInput >= 0f ? 1f : horizontalInput);
-                    Debug.Log(yRotation);
+                    yRotation += 135f;
                     break;
             }
 
-            if (verticalInput <= 0 && horizontalInput <= 0)
+            if (verticalInput > 0 && horizontalInput > 0)
+            {
+                yRotation = -0f;
+            }
+
+            if (verticalInput > 0 && horizontalInput < 0)
+            {
+                yRotation = -90f;
+            }
+
+            if (verticalInput < 0 && horizontalInput > 0)
+            {
+                yRotation = 90f;
+            }
+
+            if (verticalInput < 0 && horizontalInput < 0)
             {
                 yRotation = -180;
             }
-            
 
             return yRotation;
         }
