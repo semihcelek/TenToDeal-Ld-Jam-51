@@ -1,24 +1,32 @@
-using System;
-using System.Reflection;
 using SemihCelek.TenToDeal.CombatModule.Model;
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
 
 namespace SemihCelek.TenToDeal.CombatModule.View
 {
-    public class WeaponView : MonoBehaviour, ICommandAcquirable, IView
+    public class WeaponView : MonoBehaviour, IInteractable, IView
     {
+        public bool IsInteractable { get; }
+        
         [SerializeField] 
         private WeaponAssetData _weaponAssetData;
-
-        public Command GetCommand()
+        
+        private void SetWeaponTakenView(GameObject takingObject)
         {
-            Command command = _weaponAssetData.weaponType switch
-            {
-                WeaponAssetData.WeaponType.SwordCommand => new SwordCommand()
-            };
+            Transform gameObjectTransform = gameObject.transform;
+            
+            gameObjectTransform.SetParent(takingObject.transform);
+            gameObjectTransform.localPosition = _weaponAssetData.weaponPosition;
+        }
 
-            return command;
+        public void Interact(GameObject interactor)
+        {
+            SetWeaponTakenView(interactor);
+        }
+
+        public void Use()
+        {
+            _weaponAssetData.PlayWeaponAnimation(gameObject);
         }
     }
 }

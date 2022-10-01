@@ -1,4 +1,6 @@
+using System;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using SemihCelek.TenToDeal.Controller;
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
@@ -6,17 +8,20 @@ using Utilites;
 
 namespace SemihCelek.TenToDeal.View
 {
-    public class PlayerView : MonoBehaviour, IView
+    public class PlayerView : MonoBehaviour, IInteractor, IView
     {
         [SerializeField] private PlayerSettings _playerSettings;
 
         private ICharacterInput _characterInputController;
         private IGameStateController _gameStateController;
 
-        private Command _primaryPlayerAction;
-        private Command _secondaryPlayerAction;
+        private IInteractable _primaryPlayerInteractable;
+        private IInteractable _secondaryPlayerInteractable;
 
         private bool _canUseAction = true;
+
+        private readonly Vector3 _horizontalMovementVector = new Vector3(0.5f, 0, -0.5f);
+        private readonly Vector3 _verticalMovementVector = new Vector3(0.5f, 0, 0.5f);
 
         private void Start()
         {
@@ -37,8 +42,70 @@ namespace SemihCelek.TenToDeal.View
             }
 
             AdjustMovementForIsometricPerspective();
+            AdjustRotation();
 
             CheckPlayerActionsAsync().Forget();
+        }
+
+        private void AdjustRotation()
+        {
+            Transform transformCache = transform;
+
+            float currentYRotationAxis = transformCache.rotation.y;
+            float processedYRotation = ProcessYAxisRotation();
+
+            if (Math.Abs(currentYRotationAxis - processedYRotation) < 0.01f)
+            {
+                return;
+            }
+
+            Vector3 rotationVector =
+                new Vector3(transformCache.rotation.x, processedYRotation, transformCache.rotation.z);
+            transformCache.DORotate(rotationVector, 0.2f).SetEase(Ease.OutExpo);
+        }
+
+        private float ProcessYAxisRotation()
+        {
+            float horizontalInput = _characterInputController.HorizontalInput;
+            float verticalInput = _characterInputController.VerticalInput;
+
+            float yRotation = 0f;
+
+            switch (horizontalInput)
+            {
+                case 0f:
+                    yRotation += 0f;
+                    break;
+                case > 0f:
+                    yRotation += 45f * (verticalInput >= 0f ? 1f : verticalInput);
+                    break;
+                case < 0f:
+                    yRotation -= 135f * (verticalInput <= 0f ? 1f : verticalInput);
+                    Debug.Log(yRotation);
+                    break;
+            }
+
+            switch (verticalInput)
+            {
+                case 0f:
+                    yRotation += 0f;
+                    break;
+                case > 0f:
+                    yRotation -= 45f * (horizontalInput <= 0f ? 1f : horizontalInput);
+                    break;
+                case < 0:
+                    yRotation += 135f * (horizontalInput >= 0f ? 1f : horizontalInput);
+                    Debug.Log(yRotation);
+                    break;
+            }
+
+            if (verticalInput <= 0 && horizontalInput <= 0)
+            {
+                yRotation = -180;
+            }
+            
+
+            return yRotation;
         }
 
         private async UniTaskVoid CheckPlayerActionsAsync()
@@ -48,14 +115,14 @@ namespace SemihCelek.TenToDeal.View
 
             if (isPrimaryExecuteHappened && _canUseAction)
             {
-                _primaryPlayerAction?.Execute(gameObject);
-                SuspendAbilityAsync(0.6f).Forget();
+                _primaryPlayerInteractable?.Use();
+                SuspendAbilityAsync(0.1f).Forget();
             }
 
             if (isSecondaryExecuteHappened && _canUseAction)
             {
-                _secondaryPlayerAction?.Execute(gameObject);
-                SuspendAbilityAsync(0.6f).Forget();
+                _secondaryPlayerInteractable?.Use();
+                SuspendAbilityAsync(0.1f).Forget();
             }
         }
 
@@ -69,8 +136,8 @@ namespace SemihCelek.TenToDeal.View
 
             Vector3 position = transformCache.position;
 
-            position += speed * horizontalInput * new Vector3(0.5f, 0, -0.5f);
-            position += speed * verticalInput * new Vector3(0.5f, 0, 0.5f);
+            position += speed * horizontalInput * _horizontalMovementVector;
+            position += speed * verticalInput * _verticalMovementVector;
 
             transformCache.position = position;
         }
@@ -82,12 +149,29 @@ namespace SemihCelek.TenToDeal.View
 
         private void TryToGetAbility(Collision collision)
         {
-            ICommandAcquirable commandAcquirable = collision.collider.GetComponentInParent<ICommandAcquirable>();
+            IInteractable interactable = collision.collider.GetComponentInParent<IInteractable>();
 
-            if (commandAcquirable != null)
+            if (interactable == null)
             {
-                _primaryPlayerAction = commandAcquirable.GetCommand();
+                return;
             }
+
+            if (_primaryPlayerInteractable != null && _secondaryPlayerInteractable != null)
+            {
+                return;
+            }
+
+            if (_primaryPlayerInteractable is null)
+            {
+                _primaryPlayerInteractable = interactable;
+            }
+
+            if (_secondaryPlayerInteractable is null)
+            {
+                _secondaryPlayerInteractable = interactable;
+            }
+
+            interactable.Interact(gameObject);
         }
 
         private async UniTask SuspendAbilityAsync(float suspendDuration)
