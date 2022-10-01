@@ -5,11 +5,13 @@ namespace SemihCelek.TenToDeal.Controller
 {
     public class PlayerInputController : MonoBehaviour, ICharacterInput
     {
-        public float HorizontalInput { get; }
-        public float VerticalInput { get; }
+        public float HorizontalInput { get; private set; }
+        public float VerticalInput { get; private set; }
         
-        public bool Execute { get; }
+        public bool PrimaryExecute { get; private set; }
+        public bool SecondaryExecute { get; private set; }
 
+        
         private IGameStateController _gameStateController;
         
         private void Start()
@@ -33,8 +35,13 @@ namespace SemihCelek.TenToDeal.Controller
             {
                 return;
             }
-            
-            
+
+            HorizontalInput = Input.GetAxisRaw("Horizontal");
+            VerticalInput = Input.GetAxisRaw("Vertical");
+
+            PrimaryExecute = Input.GetAxisRaw("Fire1") >= 1f;
+            SecondaryExecute = Input.GetAxisRaw("Fire2") >= 1f;
         }
+
     }
 }

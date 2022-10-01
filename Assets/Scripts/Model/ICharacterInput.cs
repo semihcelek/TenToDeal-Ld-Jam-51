@@ -5,6 +5,7 @@ namespace SemihCelek.TenToDeal.Model
         float HorizontalInput { get; }
         float VerticalInput { get; }
         
-        bool Execute { get; }
+        bool PrimaryExecute { get; }
+        bool SecondaryExecute { get; }
     }
 }
