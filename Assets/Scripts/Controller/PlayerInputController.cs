@@ -11,7 +11,6 @@ namespace SemihCelek.TenToDeal.Controller
         public bool PrimaryExecute { get; private set; }
         public bool SecondaryExecute { get; private set; }
 
-        
         private IGameStateController _gameStateController;
         
         private void Start()
