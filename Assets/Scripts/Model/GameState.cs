@@ -6,6 +6,9 @@ namespace SemihCelek.TenToDeal.Model
     public enum GameState
     {
         Idle = 0,
-        Paused = 1,
+        TimerStarted = 1,
+        TimerCycleCompleted = 2,
+        SectionCompleted = 4,
+        Failed = 8,
     }
 }

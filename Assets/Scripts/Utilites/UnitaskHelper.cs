@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Utilites
+namespace SemihCelek.TenToDeal.Utilites
 {
     public class UnitaskHelper
     {

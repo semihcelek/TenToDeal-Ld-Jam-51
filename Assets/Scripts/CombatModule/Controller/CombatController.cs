@@ -1,7 +1,7 @@
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
 
-namespace CombatModule.Controller
+namespace SemihCelek.TenToDeal.CombatModule.Controller
 {
     public class CombatController : MonoBehaviour, IController
     {

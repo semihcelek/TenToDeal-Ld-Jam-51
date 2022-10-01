@@ -1,8 +1,8 @@
-namespace Utilites
+namespace SemihCelek.TenToDeal.Utilites
 {
     public static class ObjectHelper
     {
-        public static T Cast<T>(this object objectToCast)  where T : class
+        public static T Cast<T>(this object objectToCast) where T : class
         {
             return (T)objectToCast;
         }

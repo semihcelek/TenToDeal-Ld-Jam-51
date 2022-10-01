@@ -3,8 +3,8 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SemihCelek.TenToDeal.Controller;
 using SemihCelek.TenToDeal.Model;
+using SemihCelek.TenToDeal.Utilites;
 using UnityEngine;
-using Utilites;
 
 namespace SemihCelek.TenToDeal.View
 {

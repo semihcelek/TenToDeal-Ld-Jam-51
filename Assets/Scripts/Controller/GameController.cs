@@ -1,3 +1,4 @@
+using System;
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ namespace SemihCelek.TenToDeal.Controller
 {
     public class GameController : MonoBehaviour, IGameStateController
     {
+        public event Action<GameState> OnGameStateChanged;
         public GameState GameState { get; private set; }
 
         private void Awake()
@@ -20,6 +22,7 @@ namespace SemihCelek.TenToDeal.Controller
             }
 
             GameState = gameState;
+            OnGameStateChanged?.Invoke(gameState);
         }
 
         public void RemoveState(GameState gameState)
@@ -28,6 +31,8 @@ namespace SemihCelek.TenToDeal.Controller
             {
                 return;
             }
+            
+            OnGameStateChanged?.Invoke(gameState);
         }
     }
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponIconSprite: {fileID: 0}
   damageAmount: 10
-  weaponPosition: {x: 0.15, y: 0, z: -0.86}
+  weaponPosition: {x: 0.07, y: -0.36, z: -0.7}
   maxRotationVector: {x: 0, y: 0, z: -90}

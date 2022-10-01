@@ -1,4 +1,3 @@
-using System;
 using SemihCelek.TenToDeal.HealthModule.Controller;
 using SemihCelek.TenToDeal.HealthModule.Model;
 using SemihCelek.TenToDeal.Model;
