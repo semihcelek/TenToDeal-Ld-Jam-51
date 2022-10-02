@@ -1012,6 +1012,7 @@ GameObject:
   - component: {fileID: 1357829551}
   - component: {fileID: 1357829553}
   - component: {fileID: 1357829552}
+  - component: {fileID: 1357829554}
   m_Layer: 0
   m_Name: _Controllers
   m_TagString: Untagged
@@ -1092,6 +1093,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0f048c1120948049326bda72de3d38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1357829554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357829547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42c54d5abcb4a99bcea043f566d71b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1395654044
@@ -1610,6 +1623,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3093456622838737, guid: 77841b47fed596147b5f96ed41aa99a5, type: 3}
       propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7880827054614650938, guid: 77841b47fed596147b5f96ed41aa99a5, type: 3}
+      propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7880827054614650938, guid: 77841b47fed596147b5f96ed41aa99a5, type: 3}

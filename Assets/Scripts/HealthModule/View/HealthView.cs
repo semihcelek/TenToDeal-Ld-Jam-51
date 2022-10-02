@@ -22,6 +22,7 @@ namespace SemihCelek.TenToDeal.HealthModule.View
             InitializeDependencies();
 
             SetupHealthProgressBar();
+            _healthAssetData.currentHealth = _healthAssetData.maxHealth;
         }
 
         private void InitializeDependencies()
