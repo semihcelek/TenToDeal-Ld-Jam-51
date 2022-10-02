@@ -1,6 +1,6 @@
-using System;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using SemihCelek.TenToDeal.HealthModule.Controller;
+using SemihCelek.TenToDeal.HealthModule.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +18,7 @@ namespace SemihCelek.TenToDeal.UI
         private float _minValue;
         private float _maxValue;
         private float _currentValue;
+        private int _healthEntityId;
         
         private readonly Quaternion _transformRotation = Quaternion.Euler(30f, 45f, 0f);
 
@@ -26,8 +27,24 @@ namespace SemihCelek.TenToDeal.UI
             _minValue = progressBarData.minValue;
             _maxValue = progressBarData.maxValue;
             _currentValue = progressBarData.currentValue;
+            _healthEntityId = progressBarData.healthEntityId;
             
             AdjustProgressBar(_currentValue, false);
+
+            ListenEvents();
+        }
+
+        private void ListenEvents()
+        {
+            HealthController.OnDealDamage += OnDealDamage;
+        }
+
+        private void OnDealDamage(IHealthEntity healthEntity, int damageAmount)
+        {
+            if (healthEntity.HealthAssetData.id == _healthEntityId)
+            {
+                AdjustProgressBar(_currentValue - damageAmount);
+            }
         }
 
         private void LateUpdate()
@@ -53,15 +70,17 @@ namespace SemihCelek.TenToDeal.UI
 
     public readonly struct ProgressBarData
     {
+        public readonly int healthEntityId;
         public readonly float minValue;
         public readonly float maxValue;
         public readonly float currentValue;
 
-        public ProgressBarData(float minValue, float maxValue, float currentValue)
+        public ProgressBarData(float minValue, float maxValue, float currentValue, int healthEntityId)
         {
             this.minValue = minValue;
             this.maxValue = maxValue;
             this.currentValue = currentValue;
+            this.healthEntityId = healthEntityId;
         }
     }
 }

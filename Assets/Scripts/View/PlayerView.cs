@@ -133,13 +133,13 @@ namespace SemihCelek.TenToDeal.View
 
             if (isPrimaryExecuteHappened && _canUseAction)
             {
-                _primaryPlayerInteractable?.Use();
+                _primaryPlayerInteractable?.UseAsync();
                 SuspendAbilityAsync(0.1f).Forget();
             }
 
             if (isSecondaryExecuteHappened && _canUseAction)
             {
-                _secondaryPlayerInteractable?.Use();
+                _secondaryPlayerInteractable?.UseAsync();
                 SuspendAbilityAsync(0.1f).Forget();
             }
         }

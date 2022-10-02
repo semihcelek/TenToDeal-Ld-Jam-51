@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b132f37ed6554992953a86a63ad85121, type: 3}
-  m_Name: PlayerHealth
+  m_Name: SkeletonEnemyHealthAssetData
   m_EditorClassIdentifier: 
-  id: 1
-  maxHealth: 100
-  currentHealth: 100
+  id: 2
+  maxHealth: 30
+  currentHealth: 30

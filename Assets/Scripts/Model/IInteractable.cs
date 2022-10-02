@@ -1,4 +1,4 @@
-using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace SemihCelek.TenToDeal.Model
@@ -7,6 +7,6 @@ namespace SemihCelek.TenToDeal.Model
     {
         bool IsInteractable { get; }
         void Interact(GameObject interactor);
-        void Use();
+        UniTask UseAsync();
     }
 }

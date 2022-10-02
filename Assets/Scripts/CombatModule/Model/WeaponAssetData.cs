@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
 
@@ -12,6 +13,6 @@ namespace SemihCelek.TenToDeal.CombatModule.Model
 
         public Vector3 weaponPosition;
 
-        public abstract void PlayWeaponAnimation(GameObject weaponGameObject);
+        public abstract UniTask PlayWeaponAnimation(GameObject weaponGameObject);
     }
 }

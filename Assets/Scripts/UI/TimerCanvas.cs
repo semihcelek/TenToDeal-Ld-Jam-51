@@ -45,25 +45,18 @@ namespace SemihCelek.TenToDeal.UI
         {
             TogglePanel(true);
             _totalTimerSeconds = totalSeconds;
-            Debug.Log("timer start");
         }
 
         private void OnTimerEnded(float obj)
         {
             TogglePanel(false);
             _totalTimerSeconds = 0f;
-            Debug.Log("timer end");
-
         }
 
         private void OnSecondElapsed(float elapsedSeconds)
         {
-            Debug.Log("timer elapse");
-
             float remainingTimerPercentage = (100f * elapsedSeconds) / _totalTimerSeconds;
 
-            Debug.Log(remainingTimerPercentage);
-            
             if (remainingTimerPercentage <= (float)TimerColors.Red)
             {
                 UpdateTimerView(elapsedSeconds, TimerColors.Red);
@@ -81,8 +74,6 @@ namespace SemihCelek.TenToDeal.UI
 
         private void UpdateTimerView(float elapsedSeconds, TimerColors color)
         {
-            Debug.Log("update text " + elapsedSeconds + color );
-
             _timerText.text = elapsedSeconds.ToString();
             _backgroundImage.sprite = _spriteAssetDatas.Where(s => s.color == color).First().sprite;
         }

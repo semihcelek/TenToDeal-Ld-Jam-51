@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,16 +10,24 @@ namespace SemihCelek.TenToDeal.CombatModule.Model
     {
         public Vector3 maxRotationVector;
 
-        public override void PlayWeaponAnimation(GameObject weaponGameObject)
+        public override async UniTask PlayWeaponAnimation(GameObject weaponGameObject)
         {
             Sequence sequence = DOTween.Sequence();
 
             sequence
                 .Append(weaponGameObject.transform.DOLocalRotate(maxRotationVector, 0.1f, RotateMode.Fast)
-                    .SetEase(Ease.OutExpo))
-                .Append(weaponGameObject.transform
-                    .DOLocalRotate(Vector3.zero, 0.3f, RotateMode.Fast)
-                    .SetEase(Ease.InOutSine));
+                    .SetEase(Ease.OutExpo));
+
+            await sequence.AsyncWaitForCompletion();
+            
+            RestoreSword(weaponGameObject);
+        }
+
+        private static void RestoreSword(GameObject weaponGameObject)
+        {
+            weaponGameObject.transform
+                .DOLocalRotate(Vector3.zero, 0.3f, RotateMode.Fast)
+                .SetEase(Ease.InOutSine);
         }
     }
 }

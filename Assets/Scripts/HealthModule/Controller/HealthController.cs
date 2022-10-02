@@ -8,7 +8,7 @@ namespace SemihCelek.TenToDeal.HealthModule.Controller
     public class HealthController : MonoBehaviour, IController
     {
         public static event Action<IHealthEntity> OnHealthEntityDied;
-        public static event Action<int> OnDealDamage;
+        public static event Action<IHealthEntity, int> OnDealDamage;
 
         public void DealDamage(IHealthEntity healthEntity, int dealAmount)
         {
@@ -16,12 +16,14 @@ namespace SemihCelek.TenToDeal.HealthModule.Controller
 
             int currentHealth = healthAssetData.currentHealth - dealAmount;
 
+            healthAssetData.currentHealth = currentHealth;
+            
             if (currentHealth <= 0)
             {
                 OnHealthEntityDied?.Invoke(healthEntity);
             }
             
-            OnDealDamage?.Invoke(dealAmount);
+            OnDealDamage?.Invoke(healthEntity, dealAmount);
         }
     }
 }

@@ -24,18 +24,18 @@ namespace SemihCelek.TenToDeal.HealthModule.View
             SetupHealthProgressBar();
         }
 
-        private void SetupHealthProgressBar()
-        {
-            ProgressBarData progressBarData =
-                new ProgressBarData(0, HealthAssetData.maxHealth, HealthAssetData.currentHealth);
-            
-            _healthProgressBar.SetupProgressBar(progressBarData);
-        }
-
         private void InitializeDependencies()
         {
             _healthController = FindObjectOfType<HealthController>();
             _healthProgressBar = GetComponentInChildren<ProgressBar>();
+        }
+        
+        private void SetupHealthProgressBar()
+        {
+            ProgressBarData progressBarData =
+                new ProgressBarData(0, HealthAssetData.maxHealth, HealthAssetData.currentHealth, _healthAssetData.id);
+            
+            _healthProgressBar.SetupProgressBar(progressBarData);
         }
 
         public void GiveHealthDamage(int damageAmount)
