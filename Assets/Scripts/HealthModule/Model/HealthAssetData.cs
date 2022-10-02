@@ -8,11 +8,5 @@ namespace SemihCelek.TenToDeal.HealthModule.Model
     {
         public int id;
         public int maxHealth;
-        public int currentHealth;
-
-        private void Awake()
-        {
-            currentHealth = maxHealth;
-        }
     }
 }

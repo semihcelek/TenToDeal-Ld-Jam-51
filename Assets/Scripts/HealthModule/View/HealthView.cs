@@ -13,6 +13,8 @@ namespace SemihCelek.TenToDeal.HealthModule.View
 
         public HealthAssetData HealthAssetData => _healthAssetData;
 
+        public int CurrentHealth { get; set; }
+        
         private HealthController _healthController;
 
         private ProgressBar _healthProgressBar;
@@ -21,8 +23,8 @@ namespace SemihCelek.TenToDeal.HealthModule.View
         {
             InitializeDependencies();
 
+            CurrentHealth = _healthAssetData.maxHealth;
             SetupHealthProgressBar();
-            _healthAssetData.currentHealth = _healthAssetData.maxHealth;
         }
 
         private void InitializeDependencies()
@@ -34,7 +36,7 @@ namespace SemihCelek.TenToDeal.HealthModule.View
         private void SetupHealthProgressBar()
         {
             ProgressBarData progressBarData =
-                new ProgressBarData(0, HealthAssetData.maxHealth, HealthAssetData.currentHealth, _healthAssetData.id);
+                new ProgressBarData(0, HealthAssetData.maxHealth, CurrentHealth, _healthAssetData.id);
             
             _healthProgressBar.SetupProgressBar(progressBarData);
         }

@@ -7,10 +7,6 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
 {
     public abstract class EnemyView : MonoBehaviour, IView
     {
-        [SerializeField]
-        protected ProgressBar _progressBar;
-        
         protected EnemyState _enemyState;
-        
     }
 }

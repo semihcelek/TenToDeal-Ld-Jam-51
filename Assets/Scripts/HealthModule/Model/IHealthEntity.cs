@@ -2,6 +2,7 @@ namespace SemihCelek.TenToDeal.HealthModule.Model
 {
     public interface IHealthEntity
     {
-        public HealthAssetData HealthAssetData { get; }
+         HealthAssetData HealthAssetData { get; }
+         int CurrentHealth { get; set; }
     }
 }

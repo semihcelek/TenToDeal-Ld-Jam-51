@@ -14,13 +14,14 @@ namespace SemihCelek.TenToDeal.HealthModule.Controller
         {
             HealthAssetData healthAssetData = healthEntity.HealthAssetData;
 
-            int currentHealth = healthAssetData.currentHealth - dealAmount;
+            int currentHealth = healthEntity.CurrentHealth - dealAmount;
 
-            healthAssetData.currentHealth = currentHealth;
+            healthEntity.CurrentHealth = currentHealth;
             
             if (currentHealth <= 0)
             {
                 OnHealthEntityDied?.Invoke(healthEntity);
+                Debug.Log("die");
             }
             
             OnDealDamage?.Invoke(healthEntity, dealAmount);

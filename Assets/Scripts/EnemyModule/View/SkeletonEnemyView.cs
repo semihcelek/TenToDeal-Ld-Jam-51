@@ -1,8 +1,12 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using SemihCelek.TenToDeal.CombatModule.Controller;
 using SemihCelek.TenToDeal.Controller;
 using SemihCelek.TenToDeal.EnemyModule.Model;
+using SemihCelek.TenToDeal.HealthModule.Controller;
+using SemihCelek.TenToDeal.HealthModule.Model;
+using SemihCelek.TenToDeal.HealthModule.View;
 using SemihCelek.TenToDeal.Model;
 using SemihCelek.TenToDeal.Utilites;
 using SemihCelek.TenToDeal.View;
@@ -25,9 +29,16 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
 
         private PlayerView _playerView;
 
+        private Animator _animator;
+
+        private HealthView _healthView;
+
+        private CombatController _combatController;
+        
         private void Start()
         {
             InitializeDependencies();
+            ListenEvents();
 
             _enemyState = EnemyState.Idle;
         }
@@ -36,6 +47,23 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
         {
             _gameStateController = FindObjectOfType<GameController>();
             _playerView = FindObjectOfType<PlayerView>();
+            _combatController = FindObjectOfType<CombatController>();
+
+            _animator = GetComponentInChildren<Animator>();
+            _healthView = GetComponentInChildren<HealthView>();
+        }
+        
+        private void ListenEvents()
+        {
+            HealthController.OnHealthEntityDied += OnEntityDied;
+        }
+
+        private void OnEntityDied(IHealthEntity healthEntity)
+        {
+            if (healthEntity.HealthAssetData.id == _healthView.HealthAssetData.id)
+            {
+                _enemyState = EnemyState.Die;
+            }
         }
 
         private void FixedUpdate()
@@ -109,11 +137,16 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
 
         private void PlayDieAnimation()
         {
+            const float dieRotation = 90;
+            
+            transform.DORotate(Vector3.forward * dieRotation, 1f).SetEase(Ease.OutQuart)
+                .OnComplete(() => Destroy(gameObject));
         }
 
         private void PlayAttackAnimation()
         {
-            
+            _combatController.Attack(10, _playerView.GetComponent<HealthView>());
+            SuspendEnemyAsync(0.8f).Forget();
         }
 
         private float CalculateDistanceTowardsPlayer()

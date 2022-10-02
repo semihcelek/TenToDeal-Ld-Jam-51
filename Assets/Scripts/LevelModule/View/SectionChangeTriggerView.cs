@@ -7,6 +7,9 @@ namespace SemihCelek.TenToDeal.LevelModule.View
 {
     public class SectionChangeTriggerView : MonoBehaviour, IView
     {
+        [SerializeField] 
+        private int sectionId;
+
         [SerializeField]
         private bool _isSectionStart = true;
         
