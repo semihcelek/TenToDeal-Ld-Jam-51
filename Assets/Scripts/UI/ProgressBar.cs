@@ -1,3 +1,5 @@
+using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -16,6 +18,8 @@ namespace SemihCelek.TenToDeal.UI
         private float _minValue;
         private float _maxValue;
         private float _currentValue;
+        
+        private readonly Quaternion _transformRotation = Quaternion.Euler(30f, 45f, 0f);
 
         public void SetupProgressBar(ProgressBarData progressBarData)
         {
@@ -24,6 +28,16 @@ namespace SemihCelek.TenToDeal.UI
             _currentValue = progressBarData.currentValue;
             
             AdjustProgressBar(_currentValue, false);
+        }
+
+        private void LateUpdate()
+        {
+            KeepProgressBarRotation();
+        }
+
+        private void KeepProgressBarRotation()
+        {
+            transform.rotation = _transformRotation;
         }
 
         private void AdjustProgressBar(float currentValue, bool animate = true)
