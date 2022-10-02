@@ -30,7 +30,7 @@ namespace SemihCelek.TenToDeal.Controller
 
         private void CheckPlayerInput()
         {
-            if (_gameStateController.GameState != GameState.Idle)
+            if ((_gameStateController.GameState & GameState.Failed) == GameState.Failed)
             {
                 return;
             }

@@ -10,7 +10,8 @@ namespace SemihCelek.TenToDeal.View
 {
     public class PlayerView : MonoBehaviour, IInteractor, IView
     {
-        [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] 
+        private PlayerSettings _playerSettings;
 
         private ICharacterInput _characterInputController;
         private IGameStateController _gameStateController;
@@ -36,7 +37,7 @@ namespace SemihCelek.TenToDeal.View
 
         private void FixedUpdate()
         {
-            if (_gameStateController.GameState != GameState.Idle)
+            if ((_gameStateController.GameState & GameState.Failed) == GameState.Failed)
             {
                 return;
             }
@@ -117,6 +118,11 @@ namespace SemihCelek.TenToDeal.View
                 yRotation = -180;
             }
 
+            if (yRotation == 0f && !(verticalInput > 0 && horizontalInput > 0))
+            {
+                yRotation = transform.localRotation.y;
+            }
+
             return yRotation;
         }
 
@@ -189,7 +195,7 @@ namespace SemihCelek.TenToDeal.View
         private async UniTask SuspendAbilityAsync(float suspendDuration)
         {
             _canUseAction = false;
-            await UnitaskHelper.Delay(suspendDuration);
+            await UniTaskHelper.Delay(suspendDuration);
             _canUseAction = true;
         }
     }

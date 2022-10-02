@@ -8,7 +8,8 @@ namespace SemihCelek.TenToDeal.Model
         Idle = 0,
         TimerStarted = 1,
         TimerCycleCompleted = 2,
-        SectionCompleted = 4,
-        Failed = 8,
+        SectionStarted = 4,
+        SectionCompleted = 8,
+        Failed = 16,
     }
 }

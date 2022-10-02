@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 namespace SemihCelek.TenToDeal.Utilites
 {
-    public class UnitaskHelper
+    public class UniTaskHelper
     {
         public static UniTask Delay(float secondsToDelay, bool ignoreTimeScale = false, PlayerLoopTiming delayTiming = PlayerLoopTiming.Update, CancellationToken cancellationToken = default(CancellationToken))
         {

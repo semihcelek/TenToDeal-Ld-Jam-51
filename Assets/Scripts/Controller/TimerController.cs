@@ -11,16 +11,33 @@ namespace SemihCelek.TenToDeal.Controller
         public static event Action<float> TimerEndedEvent;
         public static event Action<float> TimerStartedEvent;
 
-        public event Action<float> SecondElapsedEvent; 
+        public event Action<float> SecondElapsedEvent;
+
+        private IGameStateController _gameStateController;
 
         private void Start()
         {
+            InitializeDependencies();
             ListenEvents();
+        }
+
+        private void InitializeDependencies()
+        {
+            _gameStateController = FindObjectOfType<GameController>();
         }
 
         private void ListenEvents()
         {
             TimerStartedEvent += OnTimerStarted;
+            _gameStateController.OnGameStateChanged += OnGameStateChanged;
+        }
+
+        private void OnGameStateChanged(GameState gameState)
+        {
+            if (gameState == GameState.SectionStarted)
+            {
+                TimerStartedEvent?.Invoke(10f);
+            }
         }
 
         private void OnTimerStarted(float duration)
@@ -32,7 +49,7 @@ namespace SemihCelek.TenToDeal.Controller
         {
             for (int index = 0; index < seconds; index++)
             {
-                await UnitaskHelper.Delay(1f);
+                await UniTaskHelper.Delay(1f);
                 
                 SecondElapsedEvent?.Invoke(seconds - index);
             }

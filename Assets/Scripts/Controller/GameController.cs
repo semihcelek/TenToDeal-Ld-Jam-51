@@ -34,5 +34,15 @@ namespace SemihCelek.TenToDeal.Controller
             
             OnGameStateChanged?.Invoke(gameState);
         }
+
+        public void EnterGameSection()
+        {
+            AddState(GameState.SectionStarted);
+        }
+
+        public void CompleteGameSection()
+        {
+            AddState(GameState.SectionCompleted);
+        }
     }
 }
