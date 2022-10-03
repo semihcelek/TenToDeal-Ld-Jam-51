@@ -50,12 +50,10 @@ namespace SemihCelek.TenToDeal.CombatModule.View
         {
             _targetHealthView = null;
             await _weaponAssetData.PlayWeaponAnimation(gameObject);
-            TryAttactUsingWeaponCollision();
-
-            // _combatController.Attack();
+            TryAttackUsingWeaponCollision();
         }
 
-        private void TryAttactUsingWeaponCollision()
+        private void TryAttackUsingWeaponCollision()
         {
             if (_targetHealthView != null)
             {
@@ -66,15 +64,13 @@ namespace SemihCelek.TenToDeal.CombatModule.View
 
         private void OnTriggerEnter(Collider other)
         {
-            HealthView healthView = other.GetComponent<HealthView>();
-
-            if (healthView != null)
+            Debug.Log(other.gameObject.name);
+            if (other.TryGetComponent(out HealthView healthView))
             {
                 Debug.Log("get health view");
                 _targetHealthView = healthView;
                 return;
             }
-
 
             DisposeHealthViewAsync().Forget();
         }

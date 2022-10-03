@@ -1,5 +1,6 @@
 using System;
 using SemihCelek.TenToDeal.HealthModule.Model;
+using SemihCelek.TenToDeal.HealthModule.View;
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
 
@@ -7,24 +8,22 @@ namespace SemihCelek.TenToDeal.HealthModule.Controller
 {
     public class HealthController : MonoBehaviour, IController
     {
-        public static event Action<IHealthEntity> OnHealthEntityDied;
-        public static event Action<IHealthEntity, int> OnDealDamage;
+        public static event Action<HealthView> HealthEntityDiedEvent;
+        public static event Action<HealthView, int> OnDealDamage;
 
-        public void DealDamage(IHealthEntity healthEntity, int dealAmount)
+        public void DealDamage(HealthView healthView, int dealAmount)
         {
-            HealthAssetData healthAssetData = healthEntity.HealthAssetData;
+            int currentHealth = healthView.CurrentHealth - dealAmount;
 
-            int currentHealth = healthEntity.CurrentHealth - dealAmount;
-
-            healthEntity.CurrentHealth = currentHealth;
+            healthView.CurrentHealth = currentHealth;
             
             if (currentHealth <= 0)
             {
-                OnHealthEntityDied?.Invoke(healthEntity);
+                HealthEntityDiedEvent?.Invoke(healthView);
                 Debug.Log("die");
             }
             
-            OnDealDamage?.Invoke(healthEntity, dealAmount);
+            OnDealDamage?.Invoke(healthView, dealAmount);
         }
     }
 }

@@ -12,9 +12,8 @@ namespace SemihCelek.TenToDeal.LevelModule.View
 
         [SerializeField]
         private bool _isSectionStart = true;
-        
-        private GameController _gameController;
-        
+
+        private SectionController _sectionController;
         private void Start()
         {
             InitializeDependencies();
@@ -22,7 +21,7 @@ namespace SemihCelek.TenToDeal.LevelModule.View
 
         private void InitializeDependencies()
         {
-            _gameController = FindObjectOfType<GameController>();
+            _sectionController = FindObjectOfType<SectionController>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -36,11 +35,11 @@ namespace SemihCelek.TenToDeal.LevelModule.View
 
             if (_isSectionStart)
             {
-                _gameController.EnterGameSection();
+                _sectionController.StartSection(sectionId);
             }
             else
             {
-                _gameController.CompleteGameSection();
+                _sectionController.EndSection(sectionId);
             }
         }
     }

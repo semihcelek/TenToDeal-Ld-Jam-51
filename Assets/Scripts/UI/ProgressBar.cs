@@ -1,6 +1,7 @@
 using DG.Tweening;
 using SemihCelek.TenToDeal.HealthModule.Controller;
 using SemihCelek.TenToDeal.HealthModule.Model;
+using SemihCelek.TenToDeal.HealthModule.View;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,9 +40,9 @@ namespace SemihCelek.TenToDeal.UI
             HealthController.OnDealDamage += OnDealDamage;
         }
 
-        private void OnDealDamage(IHealthEntity healthEntity, int damageAmount)
+        private void OnDealDamage(HealthView healthView, int damageAmount)
         {
-            if (healthEntity.HealthAssetData.id == _healthEntityId)
+            if (healthView.taskObjectView.id == _healthEntityId)
             {
                 AdjustProgressBar(_currentValue - damageAmount);
             }

@@ -1,5 +1,6 @@
 using SemihCelek.TenToDeal.HealthModule.Controller;
 using SemihCelek.TenToDeal.HealthModule.Model;
+using SemihCelek.TenToDeal.LevelModule.View;
 using SemihCelek.TenToDeal.Model;
 using SemihCelek.TenToDeal.UI;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace SemihCelek.TenToDeal.HealthModule.View
         private HealthAssetData _healthAssetData;
 
         public HealthAssetData HealthAssetData => _healthAssetData;
+
+        public TaskObjectView taskObjectView;
 
         public int CurrentHealth { get; set; }
         
@@ -31,20 +34,15 @@ namespace SemihCelek.TenToDeal.HealthModule.View
         {
             _healthController = FindObjectOfType<HealthController>();
             _healthProgressBar = GetComponentInChildren<ProgressBar>();
+            taskObjectView = GetComponent<TaskObjectView>();
         }
         
         private void SetupHealthProgressBar()
         {
             ProgressBarData progressBarData =
-                new ProgressBarData(0, HealthAssetData.maxHealth, CurrentHealth, _healthAssetData.id);
+                new ProgressBarData(0, HealthAssetData.maxHealth, CurrentHealth, taskObjectView.id);
             
             _healthProgressBar.SetupProgressBar(progressBarData);
-        }
-
-        public void GiveHealthDamage(int damageAmount)
-        {
-            _healthController.DealDamage(this, damageAmount);
-            Debug.Log("damage is given");
         }
     }
 }

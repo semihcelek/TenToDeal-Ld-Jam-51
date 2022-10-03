@@ -1,9 +1,7 @@
-using System;
 using SemihCelek.TenToDeal.HealthModule.Controller;
 using SemihCelek.TenToDeal.HealthModule.Model;
 using SemihCelek.TenToDeal.HealthModule.View;
 using SemihCelek.TenToDeal.Model;
-using SemihCelek.TenToDeal.Utilites;
 using UnityEngine;
 
 namespace SemihCelek.TenToDeal.CombatModule.Controller
@@ -19,8 +17,8 @@ namespace SemihCelek.TenToDeal.CombatModule.Controller
 
         public void Attack(int damageAmount, HealthView healthView)
         {
-            _healthController.DealDamage(healthView.GetComponent<IHealthEntity>(), damageAmount);
-            Debug.Log(damageAmount);
+            _healthController.DealDamage(healthView, damageAmount);
+            Debug.Log(healthView.name);
         }
     }
 }

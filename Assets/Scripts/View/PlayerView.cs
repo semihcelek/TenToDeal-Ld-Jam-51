@@ -10,8 +10,7 @@ namespace SemihCelek.TenToDeal.View
 {
     public class PlayerView : MonoBehaviour, IInteractor, IView
     {
-        [SerializeField] 
-        private PlayerSettings _playerSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         private ICharacterInput _characterInputController;
         private IGameStateController _gameStateController;
@@ -160,14 +159,14 @@ namespace SemihCelek.TenToDeal.View
             transformCache.position = position;
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider collider)
         {
-            TryToGetAbility(collision);
+            TryToGetAbility(collider);
         }
 
-        private void TryToGetAbility(Collision collision)
+        private void TryToGetAbility(Collider collider)
         {
-            IInteractable interactable = collision.collider.GetComponentInParent<IInteractable>();
+            IInteractable interactable = collider.GetComponentInParent<IInteractable>();
 
             if (interactable == null)
             {

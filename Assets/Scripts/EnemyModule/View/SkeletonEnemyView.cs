@@ -7,6 +7,7 @@ using SemihCelek.TenToDeal.EnemyModule.Model;
 using SemihCelek.TenToDeal.HealthModule.Controller;
 using SemihCelek.TenToDeal.HealthModule.Model;
 using SemihCelek.TenToDeal.HealthModule.View;
+using SemihCelek.TenToDeal.LevelModule.View;
 using SemihCelek.TenToDeal.Model;
 using SemihCelek.TenToDeal.Utilites;
 using SemihCelek.TenToDeal.View;
@@ -40,7 +41,7 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
             InitializeDependencies();
             ListenEvents();
 
-            _enemyState = EnemyState.Idle;
+            EnemyState = EnemyState.Idle;
         }
 
         private void InitializeDependencies()
@@ -48,21 +49,22 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
             _gameStateController = FindObjectOfType<GameController>();
             _playerView = FindObjectOfType<PlayerView>();
             _combatController = FindObjectOfType<CombatController>();
-
+            
+            _enemyTaskObjectView = GetComponent<EnemyTaskObjectView>();
             _animator = GetComponentInChildren<Animator>();
             _healthView = GetComponentInChildren<HealthView>();
         }
         
         private void ListenEvents()
         {
-            HealthController.OnHealthEntityDied += OnEntityDied;
+            HealthController.HealthEntityDiedEvent += EntityDiedEvent;
         }
 
-        private void OnEntityDied(IHealthEntity healthEntity)
+        private void EntityDiedEvent(HealthView healthView)
         {
-            if (healthEntity.HealthAssetData.id == _healthView.HealthAssetData.id)
+            if (_enemyTaskObjectView.id == healthView.taskObjectView.id)
             {
-                _enemyState = EnemyState.Die;
+                EnemyState = EnemyState.Die;
             }
         }
 
@@ -78,7 +80,7 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
 
         private void ProcessEnemyState()
         {
-            switch (_enemyState)
+            switch (EnemyState)
             {
                 case EnemyState.Idle:
                     PlayIdleAnimation();
@@ -102,7 +104,7 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
 
             if (distance <= _chaseDistance)
             {
-                _enemyState = EnemyState.Chase;
+                EnemyState = EnemyState.Chase;
             }
             
             SuspendEnemyAsync(0.2f).Forget();
@@ -125,11 +127,11 @@ namespace SemihCelek.TenToDeal.EnemyModule.View
 
             if (distance > _attackDistance)
             {
-                _enemyState = EnemyState.Idle;
+                EnemyState = EnemyState.Idle;
             }
             else if (distance <= _attackDistance)
             {
-                _enemyState = EnemyState.Attack;
+                EnemyState = EnemyState.Attack;
             }
 
             SuspendEnemyAsync(0.2f).Forget();
