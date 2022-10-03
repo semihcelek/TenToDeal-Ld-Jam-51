@@ -15,7 +15,7 @@ namespace SemihCelek.TenToDeal.CombatModule.Model
             Sequence sequence = DOTween.Sequence();
 
             sequence
-                .Append(weaponGameObject.transform.DOLocalRotate(maxRotationVector, 0.1f, RotateMode.Fast)
+                .Append(weaponGameObject.transform.DOLocalRotate(maxRotationVector, 0.06f, RotateMode.Fast)
                     .SetEase(Ease.OutExpo));
 
             await sequence.AsyncWaitForCompletion();

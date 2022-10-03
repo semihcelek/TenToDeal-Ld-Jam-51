@@ -20,7 +20,6 @@ namespace SemihCelek.TenToDeal.HealthModule.Controller
             if (currentHealth <= 0)
             {
                 HealthEntityDiedEvent?.Invoke(healthView);
-                Debug.Log("die");
             }
             
             OnDealDamage?.Invoke(healthView, dealAmount);

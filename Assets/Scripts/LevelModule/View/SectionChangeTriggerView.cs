@@ -13,6 +13,8 @@ namespace SemihCelek.TenToDeal.LevelModule.View
         [SerializeField]
         private bool _isSectionStart = true;
 
+        private bool _isInteracted;
+
         private SectionController _sectionController;
         private void Start()
         {
@@ -28,7 +30,7 @@ namespace SemihCelek.TenToDeal.LevelModule.View
         {
             bool isPlayerGameObject = other.gameObject.TryGetComponent(out PlayerView playerView);
 
-            if (!isPlayerGameObject)
+            if (!isPlayerGameObject || _isInteracted)
             {
                 return;
             }
@@ -36,6 +38,7 @@ namespace SemihCelek.TenToDeal.LevelModule.View
             if (_isSectionStart)
             {
                 _sectionController.StartSection(sectionId);
+                _isInteracted = true;
             }
             else
             {

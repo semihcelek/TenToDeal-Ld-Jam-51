@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba902d3771e3486ca9d35c4bec90e691, type: 3}
-  m_Name: Sword Weapon Asset Data
+  m_Name: Sword Weapon Asset Data 2
   m_EditorClassIdentifier: 
-  id: 1
-  damageAmount: 10
+  id: 2
+  damageAmount: 20
   weaponIconSprite: {fileID: 0}
-  weaponPosition: {x: 0.07, y: -0.36, z: -0.7}
+  weaponPosition: {x: 0.07, y: -0.36, z: 0.7}
   maxRotationVector: {x: 0, y: 0, z: -90}

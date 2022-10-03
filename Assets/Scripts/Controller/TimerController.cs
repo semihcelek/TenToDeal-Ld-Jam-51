@@ -53,8 +53,10 @@ namespace SemihCelek.TenToDeal.Controller
                 
                 SecondElapsedEvent?.Invoke(seconds - index);
             }
-            
+
+            await UniTaskHelper.Delay(1f);
             TimerEndedEvent?.Invoke(0);
+            _gameStateController.AddState(GameState.TimerCycleCompleted);
         }
     }
 }

@@ -10,13 +10,15 @@ namespace SemihCelek.TenToDeal.Controller
         public event Action<int> SectionEndedEvent;
 
         private IGameStateController _gameStateController;
-
+        
         private int _currentSection;
         public int CurrentSection => _currentSection;
 
         private void Start()
         {
             InitializeDependencies();
+            
+            PlayerPrefs.DeleteAll();
         }
 
         private void InitializeDependencies()
@@ -28,7 +30,7 @@ namespace SemihCelek.TenToDeal.Controller
         {
             int savedSection = TryGetSavedSection(sectionId);
 
-            if (savedSection == - 1)
+            if (savedSection != - 1)
             {
                 return;
             }
@@ -36,8 +38,6 @@ namespace SemihCelek.TenToDeal.Controller
             _currentSection = sectionId;
             _gameStateController.AddState(GameState.SectionStarted);
             SectionStartedEvent?.Invoke(sectionId);
-            
-            Debug.Log(sectionId);
         }
 
         public void EndSection(int sectionId)
@@ -52,8 +52,6 @@ namespace SemihCelek.TenToDeal.Controller
             _gameStateController.AddState(GameState.SectionCompleted);
             SectionEndedEvent?.Invoke(sectionId);
             SaveCompletedSection(sectionId);
-            
-            Debug.Log(sectionId);
         }
 
         private void SaveCompletedSection(int sectionId)

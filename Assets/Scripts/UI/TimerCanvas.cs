@@ -49,7 +49,7 @@ namespace SemihCelek.TenToDeal.UI
 
         private void OnTimerEnded(float obj)
         {
-            TogglePanel(false);
+            ResetTimerView();
             _totalTimerSeconds = 0f;
         }
 
@@ -76,6 +76,12 @@ namespace SemihCelek.TenToDeal.UI
         {
             _timerText.text = elapsedSeconds.ToString();
             _backgroundImage.sprite = _spriteAssetDatas.Where(s => s.color == color).First().sprite;
+        }
+        
+        private void ResetTimerView()
+        {
+            _timerText.text = "?";
+            _backgroundImage.sprite = _spriteAssetDatas.Where(s => s.color == TimerColors.Green).First().sprite;
         }
 
         private void UnsubscribeEvents()

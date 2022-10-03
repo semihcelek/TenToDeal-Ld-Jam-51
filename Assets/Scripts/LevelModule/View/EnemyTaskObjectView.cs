@@ -29,10 +29,10 @@ namespace SemihCelek.TenToDeal.LevelModule.View
 
         private void OnHealthEntityDiedEvent(HealthView healthView)
         {
-            CheckForDeath();
+            CheckForDeath(healthView);
         }
 
-        private void CheckForDeath()
+        private void CheckForDeath(HealthView healthView)
         {
             if (sectionId != _sectionController.CurrentSection)
             {
@@ -44,7 +44,7 @@ namespace SemihCelek.TenToDeal.LevelModule.View
                 return;
             }
             
-            if (_enemyView.EnemyState == EnemyState.Die)
+            if (healthView.taskObjectView.id == _enemyHealthView.taskObjectView.id)
             {
                 _taskController.CompleteTask(sectionId, id);
             }

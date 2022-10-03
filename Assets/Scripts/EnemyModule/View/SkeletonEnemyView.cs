@@ -1,11 +1,9 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SemihCelek.TenToDeal.CombatModule.Controller;
 using SemihCelek.TenToDeal.Controller;
 using SemihCelek.TenToDeal.EnemyModule.Model;
 using SemihCelek.TenToDeal.HealthModule.Controller;
-using SemihCelek.TenToDeal.HealthModule.Model;
 using SemihCelek.TenToDeal.HealthModule.View;
 using SemihCelek.TenToDeal.LevelModule.View;
 using SemihCelek.TenToDeal.Model;

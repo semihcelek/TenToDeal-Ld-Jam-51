@@ -11,6 +11,8 @@ namespace SemihCelek.TenToDeal.CombatModule.View
 {
     public class WeaponView : MonoBehaviour, IInteractable, IView
     {
+        public int id => _weaponAssetData.id; 
+        
         public bool IsInteractable { get; }
 
         private CombatController _combatController;
@@ -57,17 +59,14 @@ namespace SemihCelek.TenToDeal.CombatModule.View
         {
             if (_targetHealthView != null)
             {
-                Debug.Log("Attack!!");
                 _combatController.Attack(20, _targetHealthView);
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.name);
             if (other.TryGetComponent(out HealthView healthView))
             {
-                Debug.Log("get health view");
                 _targetHealthView = healthView;
                 return;
             }
@@ -78,7 +77,6 @@ namespace SemihCelek.TenToDeal.CombatModule.View
         private async UniTaskVoid DisposeHealthViewAsync()
         {
             await UniTaskHelper.Delay(0.2f);
-            // _targetHealthView = null;
         }
     }
 }

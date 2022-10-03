@@ -18,8 +18,6 @@ namespace SemihCelek.TenToDeal.HealthModule.View
 
         public int CurrentHealth { get; set; }
         
-        private HealthController _healthController;
-
         private ProgressBar _healthProgressBar;
 
         private void Start()
@@ -32,7 +30,6 @@ namespace SemihCelek.TenToDeal.HealthModule.View
 
         private void InitializeDependencies()
         {
-            _healthController = FindObjectOfType<HealthController>();
             _healthProgressBar = GetComponentInChildren<ProgressBar>();
             taskObjectView = GetComponent<TaskObjectView>();
         }

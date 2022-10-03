@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SemihCelek.TenToDeal.View
 {
-    public class PlayerView : MonoBehaviour, IInteractor, IView
+    public class PlayerView : MonoBehaviour, IView
     {
         [SerializeField] private PlayerSettings _playerSettings;
 
@@ -183,7 +183,7 @@ namespace SemihCelek.TenToDeal.View
                 _primaryPlayerInteractable = interactable;
             }
 
-            if (_secondaryPlayerInteractable is null)
+            if (_secondaryPlayerInteractable is null && interactable.id != _primaryPlayerInteractable.id)
             {
                 _secondaryPlayerInteractable = interactable;
             }

@@ -1,6 +1,8 @@
 using System;
 using SemihCelek.TenToDeal.Model;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 namespace SemihCelek.TenToDeal.Controller
 {
@@ -10,6 +12,8 @@ namespace SemihCelek.TenToDeal.Controller
         public GameState GameState { get; private set; }
 
         private SectionController _sectionController;
+
+        private const int MainGameSceneIndex = 0;
 
         private void Awake()
         {
@@ -35,6 +39,7 @@ namespace SemihCelek.TenToDeal.Controller
 
             GameState = gameState;
             OnGameStateChanged?.Invoke(gameState);
+            ProcessGameNewGameState(gameState);
         }
 
         public void RemoveState(GameState gameState)
@@ -45,6 +50,14 @@ namespace SemihCelek.TenToDeal.Controller
             }
 
             OnGameStateChanged?.Invoke(gameState);
+        }
+        
+        private void ProcessGameNewGameState(GameState gameState)
+        {
+            if ((gameState & GameState.Failed) == GameState.Failed)
+            {
+                SceneManager.LoadScene(MainGameSceneIndex);
+            }
         }
     }
 }

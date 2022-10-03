@@ -1,6 +1,5 @@
 using DG.Tweening;
 using SemihCelek.TenToDeal.HealthModule.Controller;
-using SemihCelek.TenToDeal.HealthModule.Model;
 using SemihCelek.TenToDeal.HealthModule.View;
 using TMPro;
 using UnityEngine;
